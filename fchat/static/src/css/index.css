@@ -1,0 +1,95 @@
+@import url(../fonts/fonts.css);
+
+body {
+    background-image: url("../images/background.jpg");
+    background-color: blue;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+
+    display: flex;            
+    flex-direction: column;   
+    font-family: "Underdog", sans-serif;
+    margin: 0;                
+    padding: 20px;            
+    min-height: 100vh;        
+    box-sizing: border-box;   
+}
+@media (max-width: 1920px) {
+  body {
+    background-size: cover;
+  }
+}
+    
+main {
+  display: flex;            
+  flex-direction: column;   
+  justify-content: center;  
+  align-items: center;      
+  max-width: 600px;  
+  max-height: 400px;       
+  margin: auto;           
+  padding: 40px;
+  scale: 1.4;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.3em;
+  font-family: Bungee Spice;
+  font-weight: bold;
+  color: #0080ff;
+  margin-bottom: 15px;
+}
+  
+p {
+  font-size: 1.2em;
+  color: yellow; 
+  margin-bottom: 25px;
+  text-align: center;
+}
+  
+#roomInputError {
+  background-color: red;
+  border-radius: 7px;
+  padding: 4px;
+  margin: 5px;
+  display: none;
+}
+
+#roomInput {
+  padding: 12px 16px;
+  font-size: 1em;
+  border: 1px solid #ced4da;
+  border-radius: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+}  
+#roomInput:focus {
+  outline: none;
+  border-color: #17eb65;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+  
+button {
+  padding: 12px 24px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: white;
+  background-color: #4880bc;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgb(224, 252, 153);
+  cursor: pointer;
+  transition: background-color 0.2s ease; /*  Плавный эффект при наведении */
+}
+button:hover {
+  background-color: #0056b3;
+}
+button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

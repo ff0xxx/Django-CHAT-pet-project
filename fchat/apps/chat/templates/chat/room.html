@@ -4,44 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room {{ room_name }}</title>
-</head>
+    {% load static %}    
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/room.css' %}">
+  </head>
 <body>
-    <h2>Room: {{ room_name }}</h2>
-    <div id="chat-log">
-        <h5>LOG</h5>
-        <p></p>
+  <nav class="fixed-top title">  
+      <h2 class="fw-bold ms-2" data-room-name="{{ room_name }}">Room: <span>{{ room_name }}</span></h2>
+  </nav>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6"> 
+        <div id="chat-log">
+
+        </div>
+        
+        <div class="fixed-bottom chat-box-tray">
+            <input placeholder="Input your message..." id="chat-message-input" type="text" min="1">
+            <button class="btn btn-primary" id="chat-message-submit">Send</button>
+        </div>
+      </div>
     </div>
-    <input placeholder="Input your message..." id="chat-message-input" type="text" size="128">
-    <button id="chat-message-submit">Send</button>
+  </div>
 
-    <script>
-        const roomName = "{{ room_name }}"
-        const chatSocket = new WebSocket(
-            'ws://' + window.location.host +
-            '/ws/chat/' + roomName + '/'
-        );
-
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data)
-            const message = data['message']
-
-            document.querySelector('#chat-log').innerHTML += (message + '<br>')
-        }
-
-        chatSocket.onclose = function(e) {
-            console.error("Chat socket closed unexpectedly")
-        }
-
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input')
-            const message = messageInputDom.value
-
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }))
-
-            messageInputDom.value = ''
-        }
-    </script>
+<script src="{% static 'js/room.js' %}"></script>
 </body>
 </html>

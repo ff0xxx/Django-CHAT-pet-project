@@ -1,0 +1,156 @@
+@import url(../fonts/fonts.css);
+
+body {
+    font-family: "Underdog", sans-serif;
+    background-image: url("../images/background.jpg");
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+  
+.title {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F5F5DC;
+  opacity: 90%;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 20px;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 20px;
+
+  span, p {
+    font-family: "Bungee Spice";
+    font-size: 2.4rem;
+  }
+}  
+@media (max-width: 768px) {
+  .title {
+    width: 80%;
+    margin-top: 10px; 
+  }
+
+  .title span, .title p {
+    font-size: 1.8rem;
+  }
+}
+    
+#chat-log {
+  position: relative; 
+  margin-top: 6rem;
+  margin-bottom: 100px; 
+  width: 100%;
+  max-width: 100%;
+  word-break: break-word;
+  overflow-y: auto; overflow-x: hidden;
+}
+
+.chat-bubble {
+  position: relative;
+  background: yellow;
+  opacity: 0.8;
+  border-radius: 15px;
+  border: none;
+  padding: 10px 14px;
+  font-family: "Underdog", sans-serif;
+  word-wrap: break-word; 
+  word-break: break-word;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 60%;
+      right: -29px;
+      height: 0;
+      border: 15px solid transparent;
+      border-left: 15px solid yellow;
+      border-bottom: 0;
+      transform: translateY(-50%);
+    }
+    
+    &--left {
+       &:after {
+        left: 0;
+        right: auto;
+        border-left: 0;
+        border-right: 15px solid #a2ff00;
+        margin-left: -20px;
+      }
+    }
+    
+    &--right {
+      &:after {
+        margin-right: -40px;
+      }
+    }
+}
+  
+input {
+  border: none;
+  border-radius: 30px;
+  width: 80%;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+input::placeholder {
+  font-weight: 300;
+  font-family: "Underdog", sans-serif;
+  color: #c0bdbd;
+  margin-left: 20px;
+}
+input:focus {
+  outline: none;
+}
+ 
+.chat-box-tray {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #17eb65;
+  opacity: 70%;
+  border-radius: 15px;
+  width: 50%;
+  padding: 30px 15px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+
+  input {
+    height: 60px;
+    margin: 0 10px;
+  }
+  input::placeholder{
+    font-size: 20px;
+    color: rgb(91, 91, 91, 0.6);
+  }
+  
+  i {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    vertical-align: middle;
+    
+    &:last-of-type {
+      margin-left: 25px;
+    }
+  }
+
+  button {
+    background-color: rgb(10, 178, 16);
+    border: none;
+    font-family: "Underdog", sans-serif;
+    font-size: 22px;
+  }
+
+  button:hover,
+  button:focus {
+    background-color: #0a9103;
+  }
+  
+}
+@media (max-width: 768px) {
+  .chat-box-tray {
+    width: 80%;
+    margin-top: 10px;
+  }
+}
