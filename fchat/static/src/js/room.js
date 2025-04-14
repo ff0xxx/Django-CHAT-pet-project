@@ -1,7 +1,7 @@
-const roomName = document.querySelector('nav h2').dataset.roomName
+const groupName = document.querySelector('nav h2').dataset.groupName
 const chatSocket = new WebSocket(
     'ws://' + window.location.host +
-    '/ws/chat/' + roomName + '/'
+    '/ws/chat/' + groupName + '/'
 );
 
 chatSocket.onclose = function(e) {
@@ -27,12 +27,17 @@ function addMessageToChatLog(formattedMessage) {
 
     const rowDiv = document.createElement('div');
     rowDiv.className = 'row no-gutters';
+    rowDiv.style.width = "800px";
 
+// ТО ЧТО В КОММЕНТАХ - ДЛЯ LEFT >:)
     const colDiv = document.createElement('div');
-    colDiv.className = 'col-md-3 offset-md-9';
+    colDiv.className = 'col-md-6 offset-md-4';
+    // colDiv.className = 'col-md-6 offset-md-2';
 
     const chatBubbleDiv = document.createElement('div');
     chatBubbleDiv.className = 'chat-bubble chat-bubble--right';
+    // chatBubbleDiv.className = 'chat-bubble chat-bubble--left';
+    // chatBubbleDiv.style.alignItems = 'flex-start';
     chatBubbleDiv.innerHTML = formattedMessage;
 
     const br = document.createElement('br');
@@ -90,3 +95,41 @@ messageInputDom.addEventListener('keydown', function(e) {
         sendMessage();
     }
 })
+
+// --------------------------------------------------------------------------------index.js
+
+const inputElement = document.querySelector('#roomInput')
+const errorElement = document.querySelector('#roomInputError');
+
+inputElement.addEventListener('input', (e) => {
+    const value = inputElement.value
+    const allowedChars = /^[a-zA-Z0-9_]*$/
+
+    if (inputElement.value.length > 28) { 
+        inputElement.style.borderColor = "red";
+        inputElement.value = value.slice(0, 28); 
+        errorElement.textContent = "Too many symbols!"
+        errorElement.style.display = "block"
+    } else if (!allowedChars.test(value)) {
+        inputElement.value = value.slice(0, value.length - 1)
+        errorElement.textContent = "Only a-z, A-Z, 0-9 and _!"
+        errorElement.style.display = "block"
+    } else {
+        inputElement.style.borderColor ="";
+        errorElement.textContent = ":)"
+        errorElement.style.display = "none"
+    }
+})
+
+
+function joinRoom() {
+    const roomName = document.getElementById('roomInput').value.trim();
+    
+    if (!roomName) {
+        alert('Please enter room name!');
+        return;
+    }
+    console.log(encodeURIComponent(roomName))
+    
+    window.location.href = `/chat/${encodeURIComponent(roomName)}/`;
+}

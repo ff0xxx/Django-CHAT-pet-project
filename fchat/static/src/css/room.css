@@ -3,13 +3,10 @@
 body {
     font-family: "Underdog", sans-serif;
     background-image: url("../images/background.jpg");
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
 }
   
 .title {
-  position: fixed;
+  position: sticky;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,7 +14,8 @@ body {
   opacity: 90%;
   border: 1px solid rgb(255, 255, 255);
   border-radius: 20px;
-  width: 50%;
+  width: 80%;
+  height: 80px;
   margin: 0 auto;
   margin-top: 20px;
 
@@ -36,67 +34,118 @@ body {
     font-size: 1.8rem;
   }
 }
-    
+
+.sidebar {
+  gap: 30px;
+  padding: 20px;
+  height: 100vh;          /* Занимает всю высоту экрана */
+  position: sticky;       /* Фиксированное положение при прокрутке */
+  top: 0;                 /* Прилипает к верху экрана */
+  display: flex;          /* Включаем flexbox */
+  flex-direction: column; /* Располагаем элементы вертикально */
+  align-items: center;    /* Выравниваем элементы по центру по горизонтали */
+}
+
+.sidebar {
+  button {
+    font-size: 25px;
+    border-radius: 15px;
+    width: 100%;     
+    padding: 5px 0;        
+    box-shadow: 0px 0px 4px 2px white;
+  }
+
+  a {
+    display: block;        
+    padding: 5px 0;        
+    color: yellow;        
+    text-shadow: 0 0 2px rgb(118, 245, 249);
+    text-decoration: none;
+    font-size: 25px;
+    text-align: center;    
+    width: 100%;     
+    border-radius: 15px;
+    box-shadow: 0px 0px 3px 5px rgba(0, 0, 255, 0.2);
+  }
+  a:hover {
+    color: #ff6924;  
+    scale: 1.05;
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 205, 0.2);
+    transition: all 0.2s ease;
+  }
+}
+
+.main-content {
+  position: relative; /* чтобы правильно позиционировать chat-box-tray */
+}
+
+.chat-container {
+  margin-top: 5rem; /* чтобы не перекрывалось title */
+}
+
 #chat-log {
-  position: relative; 
-  margin-top: 6rem;
-  margin-bottom: 100px; 
-  width: 100%;
+  position: relative;
+  display: flex;          /* Включаем flexbox */
+  flex-direction: column; /* Располагаем элементы вертикально */
+  align-items: flex-end;
   max-width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 100px;
   word-break: break-word;
-  overflow-y: auto; overflow-x: hidden;
 }
 
 .chat-bubble {
   position: relative;
   background: yellow;
-  opacity: 0.8;
   border-radius: 15px;
   border: none;
   padding: 10px 14px;
-  font-family: "Underdog", sans-serif;
-  word-wrap: break-word; 
+  word-wrap: break-word;
   word-break: break-word;
+  width: fit-content;
+  max-width: 100%; 
+  margin-left: auto; 
+}
+.chat-bubble--left {
+  margin-left: 0; 
+  margin-right: auto;
 
-    &:after {
-      content: '';
-      position: absolute;
-      top: 60%;
-      right: -29px;
-      height: 0;
-      border: 15px solid transparent;
-      border-left: 15px solid yellow;
-      border-bottom: 0;
-      transform: translateY(-50%);
-    }
-    
-    &--left {
-       &:after {
-        left: 0;
-        right: auto;
-        border-left: 0;
-        border-right: 15px solid #a2ff00;
-        margin-left: -20px;
-      }
-    }
-    
-    &--right {
-      &:after {
-        margin-right: -40px;
-      }
-    }
+  #chat-log {
+    align-items: flex-start;
+  }
+}
+.chat-bubble::after {
+  content: '';
+  position: absolute;
+  top: 60%;
+  right: -28px;
+  height: 0;
+  border: 15px solid transparent;
+  border-left: 15px solid yellow;
+  border-bottom: 0;
+  transform: translateY(-50%);
+}
+.chat-bubble--left::after {
+    left: 0;
+    right: auto;
+    border-left: 0;
+    border-right: 15px solid #a2ff00;
+    margin-left: -20px;
+}
+.chat-bubble--right::after {
+    /* margin-right: -40px; */
+    /* im thinking guys */
 }
   
 input {
   border: none;
   border-radius: 30px;
-  width: 80%;
+  width: 85%;
   padding: 8px 12px;
   box-sizing: border-box;
 }
 input::placeholder {
   font-weight: 300;
-  font-family: "Underdog", sans-serif;
   color: #c0bdbd;
   margin-left: 20px;
 }
@@ -105,20 +154,24 @@ input:focus {
 }
  
 .chat-box-tray {
+  position: fixed;
+  bottom: 0;
+  left: calc(25% + 20px); /* Выравнивание по левому краю, как у title */
+  right: 20px; /* Выравнивание по правому краю, как у title */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 58%; /* Чтобы компенсировать отступы слева и справа */
+  height: 120px;
   background: #17eb65;
   opacity: 70%;
   border-radius: 15px;
-  width: 50%;
-  padding: 30px 15px;
+  padding: 30px 20px;
   margin: 0 auto;
   margin-bottom: 20px;
 
   input {
+    font-size: 23px;
     height: 60px;
-    margin: 0 10px;
+    margin: 0 20px;
   }
   input::placeholder{
     font-size: 20px;
@@ -136,14 +189,12 @@ input:focus {
   }
 
   button {
-    background-color: rgb(10, 178, 16);
-    border: none;
-    font-family: "Underdog", sans-serif;
     font-size: 22px;
+    background-color: rgb(10, 178, 16);
+    border-radius: 15px;
+    border: none;
   }
-
-  button:hover,
-  button:focus {
+  button:hover {
     background-color: #0a9103;
   }
   
@@ -152,5 +203,41 @@ input:focus {
   .chat-box-tray {
     width: 80%;
     margin-top: 10px;
+  }
+}
+
+#exampleModal {
+  .modal--my-head {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 2.3em;
+    font-family: Bungee Spice;
+    font-weight: bold;
+    color: #0080ff;
+  }
+    
+  #roomInputError {
+    background-color: red;
+    color: white;
+    opacity: 80%;
+    border-radius: 7px;
+    padding: 4px;
+    margin: 5px;
+    display: none;
+  }
+  
+  #roomInput {
+    padding: 12px 16px;
+    font-size: 1em;
+    border: 1px solid #ced4da;
+    border-radius: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+  }  
+  #roomInput:focus {
+    outline: none;
+    border-color: #17eb65;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
 }

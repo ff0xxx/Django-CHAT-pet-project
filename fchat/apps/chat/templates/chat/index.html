@@ -12,13 +12,18 @@
   <body>
     <main>
         <h2 class="fw-bold">Welcome!</h2>
-        <p>Enter a room name and join:</p>
-
-        <span id="roomInputError"></span>
-        <input placeholder="Room Name" id="roomInput" type="text" required>
-        <button onclick="joinRoom()">Join</button>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-error">{{ form.non_field_errors }}</div>
+                
+            {% for f in form %}
+            <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
     </main>
 
-    <script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
 </body>
 </html>

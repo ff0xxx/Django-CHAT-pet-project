@@ -3,32 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room {{ room_name }}</title>
+    <title>{{ group_name }}</title>
     {% load static %}    
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/room.css' %}">
   </head>
 <body>
-  <nav class="fixed-top title">  
-      <h2 class="fw-bold ms-2" data-room-name="{{ room_name }}">Room: <span>{{ room_name }}</span></h2>
-  </nav>
+  <div class="container-fluid">
+    <div class="row">      
+        <div class="col-md-3">
+            <div class="sidebar">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success" style="font-size: 1.5em" 
+                      data-bs-toggle="modal" data-bs-target="#exampleModal">Add new Group</button>
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6"> 
-        <div id="chat-log">
-
+                {% for group in group_list %}
+                    <a href="{% url 'group' group.uuid %}">{{ group.name }}</a>
+                {% endfor %}
+            </div>
         </div>
-        
-        <div class="fixed-bottom chat-box-tray">
+
+      <div class="col-md-9 main-content">  <!-- Основной контент -->
+        <nav class="fixed-top title">  
+          <h2 class="fw-bold ms-2" data-group-name="{{ group_name }}">Group: <span>{{ group_name }}</span></h2>
+        </nav>
+
+        <div class="chat-container">
+          <div id="chat-log"></div>
+          <div class="chat-box-tray">
             <input placeholder="Input your message..." id="chat-message-input" type="text" min="1">
             <button class="btn btn-primary" id="chat-message-submit">Send</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+<!-- Modal: exampleModal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal--my-head modal-title fs-5" id="exampleModalLabel">Enter a group name and join:</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <span id="roomInputError"></span>
+        <input placeholder="Group Name" id="roomInput" type="text" required>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="joinRoom()">Join</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="{% static 'js/room.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
