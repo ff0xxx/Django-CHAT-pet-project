@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.forms import ValidationError
 from django.urls import reverse
 import uuid
 
@@ -12,15 +13,19 @@ class Group(models.Model):
     members = models.ManyToManyField(User, related_name='user_groups')
 
     def __str__(self):
-        return f"{self.name} - {len(self.members.all())}"
+        return self.name
     
     def get_absolute_url(self):
         return reverse("room", args=[str(self.uuid)])
-    
-    def add_user_to_group(self, user: User):
-        pass
 
-    def remove_user_from_group(self, user: User):
+    def add_user_to_group(self, user):
+        if self.members.filter(id=user.id).exists():
+            raise ValidationError("User already in group!")
+        Event.objects.create(type='Join', user=user, group=self)
+        self.members.add(user)
+        return True
+
+    def remove_user_from_group(self, user):
         pass
 
 
@@ -36,8 +41,8 @@ class Message(models.Model):
 
 class Event(models.Model):
     CHOICES = [
-        ('Leave', 'leave'),
         ('Join', 'join'),
+        ('Leave', 'leave'),
     ]
 
     type = models.CharField(max_length=10, choices=CHOICES)

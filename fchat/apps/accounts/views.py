@@ -5,10 +5,9 @@ from django.contrib.auth.views import AuthenticationForm
 
 class LoginUser(LoginView):
     template_name = 'chat/index.html'
-    form = AuthenticationForm
+    form_class = AuthenticationForm
 
     def get_success_url(self):
-        return reverse('group', args=[self.request.user.user_groups.get(id=1).uuid])
-    
+        user_group = self.request.user.user_groups.first()
+        return reverse('chat:group', kwargs={'group_uuid': user_group.uuid})
 
-# To Be Continued
