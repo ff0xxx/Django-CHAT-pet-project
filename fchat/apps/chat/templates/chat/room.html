@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ group_name }}</title>
+    <title>{{ current_group.name }}</title>
     {% load static %}    
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
@@ -19,22 +19,22 @@
                       data-bs-toggle="modal" data-bs-target="#exampleModal">Add new Group</button>
 
                 {% for group in group_list %}
-                    <a href="{% url 'group' group.uuid %}">{{ group.name }}</a>
+                    <a href="{% url 'chat:group' group.uuid %}">{{ group.name }}</a>
                 {% endfor %}
             </div>
         </div>
 
       <div class="col-md-9 main-content">  <!-- Основной контент -->
         <nav class="fixed-top title">  
-          <h2 class="fw-bold ms-2" data-group-name="{{ group_name }}">Group: <span>{{ group_name }}</span></h2>
+          <h2 class="fw-bold ms-2" data-group-uuid="{{ current_group.uuid }}">Group: <span>{{ current_group.name }}</span></h2>
         </nav>
 
-        <div class="chat-container">
+        <div class="col-md-8 offset-md-2 chat-container">
           <div id="chat-log"></div>
           <div class="chat-box-tray">
-            <input placeholder="Input your message..." id="chat-message-input" type="text" min="1">
-            <button class="btn btn-primary" id="chat-message-submit">Send</button>
-          </div>
+            <input placeholder="Input your message, {{ user.username }}" id="chat-message-input" type="text" min="1">
+            <button class="btn btn-primary" id="chat-message-submit" data-username="{{ user.username }}">Send</button>
+          </input>
         </div>
       </div>
     </div>
@@ -49,15 +49,17 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <div class="modal-body">
-        <span id="roomInputError"></span>
-        <input placeholder="Group Name" id="roomInput" type="text" required>
-      </div>
+        <div class="modal-body">
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+          <span id="groupInputError"></span>
+          <input placeholder="Group UUID" id="groupInput" type="text" required>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="joinButton">Join</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       
-      <div class="modal-footer">
-        <button class="btn btn-primary" onclick="joinRoom()">Join</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
     </div>
   </div>
 </div>

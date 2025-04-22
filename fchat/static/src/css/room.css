@@ -92,6 +92,7 @@ body {
   margin-top: 2rem;
   margin-bottom: 100px;
   word-break: break-word;
+  gap: 10px;
 }
 
 .chat-bubble {
@@ -103,16 +104,13 @@ body {
   word-wrap: break-word;
   word-break: break-word;
   width: fit-content;
-  max-width: 100%; 
+  max-width: 80%; 
   margin-left: auto; 
 }
 .chat-bubble--left {
   margin-left: 0; 
   margin-right: auto;
-
-  #chat-log {
-    align-items: flex-start;
-  }
+  background-color: aqua; /* вынести это в переменные */
 }
 .chat-bubble::after {
   content: '';
@@ -121,7 +119,7 @@ body {
   right: -28px;
   height: 0;
   border: 15px solid transparent;
-  border-left: 15px solid yellow;
+  border-left: 15px solid yellow; /* как еще переливание цвета сделать как в тг? */
   border-bottom: 0;
   transform: translateY(-50%);
 }
@@ -129,14 +127,18 @@ body {
     left: 0;
     right: auto;
     border-left: 0;
-    border-right: 15px solid #a2ff00;
-    margin-left: -20px;
+    border-right: 15px solid aqua;
+    margin-left: -14px;
 }
 .chat-bubble--right::after {
     /* margin-right: -40px; */
     /* im thinking guys */
 }
   
+#groupInput {
+  border: 1px solid black;
+}
+
 input {
   border: none;
   border-radius: 30px;
@@ -153,6 +155,9 @@ input:focus {
   outline: none;
 }
  
+/* 1. слишком толстая
+2. не сжимается
+3. затемняет др.элементы (сообщения) */
 .chat-box-tray {
   position: fixed;
   bottom: 0;
@@ -166,7 +171,6 @@ input:focus {
   border-radius: 15px;
   padding: 30px 20px;
   margin: 0 auto;
-  margin-bottom: 20px;
 
   input {
     font-size: 23px;
