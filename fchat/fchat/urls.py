@@ -7,5 +7,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('chat/', include('apps.chat.urls')),
     path('accounts/', include('apps.accounts.urls')),
-    path('<uuid:group_uuid>/', ChatListView.as_view(), name='group'),
 ]

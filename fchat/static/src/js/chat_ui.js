@@ -40,25 +40,3 @@ function escapeHTML(str) {
       }
     });
 }
-
-
-const messageInputDom = document.querySelector('#chat-message-input');
-const messageSubmitDom = document.querySelector('#chat-message-submit'); 
-
-messageSubmitDom.onclick = function(e) {
-    sendMessage();
-};
-messageInputDom.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault(); // Предотвращаем стандартное поведение Enter (перенос строки)
-        sendMessage();
-    }
-})
-
-function sendMessage() {
-    const message = messageInputDom.value.trim();
-    chatSocket.send(JSON.stringify({
-        'message': message
-    }));
-    messageInputDom.value = '';
-}
