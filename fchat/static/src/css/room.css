@@ -44,16 +44,6 @@ body {
   display: flex;          /* Включаем flexbox */
   flex-direction: column; /* Располагаем элементы вертикально */
   align-items: center;    /* Выравниваем элементы по центру по горизонтали */
-}
-
-.sidebar {
-  button {
-    font-size: 25px;
-    border-radius: 15px;
-    width: 100%;     
-    padding: 5px 0;        
-    box-shadow: 0px 0px 4px 2px white;
-  }
 
   a {
     display: block;        
@@ -73,6 +63,35 @@ body {
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 205, 0.2);
     transition: all 0.2s ease;
   }
+}
+
+.sidebar-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sidebar-button {
+    border: none;
+    color: white;
+    border-radius: 25px 0 0 25px; 
+    font-size: 23px;
+    background-color: #ff3103;
+
+    &:hover {
+      background-color: #e92b00;
+    }
+}
+.sidebar-button2 {
+    border: none;
+    color: white;
+    border-radius: 0 25px 25px 0; 
+    font-size: 23px;
+    background-color: #0a9103;
+
+    &:hover {
+      background-color: #0fb706;
+    }
 }
 
 .main-content {
@@ -171,11 +190,12 @@ input:focus {
   border-radius: 15px;
   padding: 30px 20px;
   margin: 0 auto;
+  margin-bottom: 20px;
 
   input {
+    margin: 0 20px;
     font-size: 23px;
     height: 60px;
-    margin: 0 20px;
   }
   input::placeholder{
     font-size: 20px;
@@ -197,11 +217,23 @@ input:focus {
     background-color: rgb(10, 178, 16);
     border-radius: 15px;
     border: none;
-  }
-  button:hover {
-    background-color: #0a9103;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Плавное изменение всех свойств */
+    transform-origin: center; /* Точка трансформации по центру */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Тень для объема */
   }
   
+  button:hover {
+    background-color: #0a9103;
+    transform: translateY(-2px); /* Легкий подъем при наведении */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  
+  button:active {
+    background-color: #067800 !important;
+    transform: scale(0.95) translateY(1px); /* Уменьшение + опускание */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Уменьшение тени */
+    transition: all 0.2s ease; /* Ускоренная анимация при нажатии */
+  }
 }
 @media (max-width: 768px) {
   .chat-box-tray {

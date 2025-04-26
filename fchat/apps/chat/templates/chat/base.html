@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}room{% endblock %}</title>
+    {% load static %}    
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/room.css' %}">
+  </head>
+<body>
+  <div class="container-fluid">
+    <div class="row">      
+        <div class="col-md-3">
+            <div class="sidebar">
+              <!-- Button trigger modal -->
+               <div class="sidebar-div">
+                <button type="button" class="sidebar-button" id="leaveButton">Leave Group</button>
+                <button type="button" class="sidebar-button2" data-bs-toggle="modal" 
+                      data-bs-target="#exampleModal">Add new Group</button> 
+              </div>
+                 
+              {% for group in group_list %}
+                  <a href="{% url 'chat:group' group.uuid %}">{{ group.name }}</a>
+              {% endfor %}
+            </div>
+        </div>
+
+      <div class="col-md-9 main-content">  <!-- Основной контент -->
+        <nav class="fixed-top title">  
+            {% block header %}
+                <span>Main Page</span>
+            {% endblock %}
+        </nav>
+
+        <div class="col-md-8 offset-md-2 chat-container">
+          {% block content %}
+          <div class="welcome-card">
+            <div class="card shadow-lg rounded-4 overflow-hidden border-0">
+              <div class="video-container rounded-top-4">
+                <video autoplay loop muted playsinline class="w-100">
+                  <source src="{% static 'images/animation.mp4' %}" type="video/mp4">
+                  Your browser does not support video
+                </video>
+              </div>
+              
+              <div class="card-body text-center p-4 bg-light-pink">
+                <h2 class="fw-bold mb-3 cute-title">Nice To Meet You!</h2>
+                <p class="lead mb-0 cute-text">Let's chat ❤</p>
+              </div>
+            </div>
+          </div>
+          {% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: exampleModal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal--my-head modal-title fs-5" id="exampleModalLabel">Enter a group UUID and join:</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+        <div class="modal-body">
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+          <span id="groupInputError"></span>
+          <input placeholder="Group UUID" id="groupInput" type="text" required>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="joinButton">Join</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+{% block scripts %}
+{% endblock %}
+  <script type="module" src="{% static 'js/group_ui.js' %}"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
