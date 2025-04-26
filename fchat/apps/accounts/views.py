@@ -4,7 +4,7 @@ from django.contrib.auth.views import AuthenticationForm
 
 
 class LoginUser(LoginView):
-    template_name = 'chat/login.html'
+    template_name = 'accounts/login.html'
     form_class = AuthenticationForm
 
     def get_success_url(self):
