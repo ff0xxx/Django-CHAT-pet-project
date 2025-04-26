@@ -26,8 +26,8 @@ function inputValidate () {
 }
 
 
-document.getElementById('joinButton').addEventListener('click', joinRoom);
-async function joinRoom() {
+document.getElementById('joinButton').addEventListener('click', joinGroup);
+async function joinGroup() {
     try {
         // Проверка наличия элементов DOM
         // const csrfTokenInput = document.querySelector("input[name='csrfmiddlewaretoken']");
@@ -62,7 +62,46 @@ async function joinRoom() {
             window.location.href = data.redirect_url
         }
     } catch (error) {
-        console.error('JoinRoom error:', error)
+        console.error('JoinGroup error:', error)
+        alert(`Error: ${error.message}`)
+    }
+}
+
+leaveButton.addEventListener('click', leaveGroup);
+async function leaveGroup(event) {
+    try {
+        try {
+            document.querySelector('nav.title h2').dataset['groupUuid']
+        } catch {
+            alert('You are not in the group now🤨')
+            return
+        }
+
+        const groupUUID = document.querySelector('nav.title h2').dataset['groupUuid']
+        // FIXME: rename /add/ into the /event/
+        const response = await fetch('/chat/add/', {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': document.querySelector("[name=csrfmiddlewaretoken]")?.value || '',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uuid: groupUUID}),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}))
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
+        }
+
+        const data = await response.json()
+        alert(data.message)
+
+        if (data.redirect_url) {
+            window.location.href = data.redirect_url
+        }
+
+    } catch (error) {
+        console.error(`JoinGroup error: ${error}`)
         alert(`Error: ${error.message}`)
     }
 }

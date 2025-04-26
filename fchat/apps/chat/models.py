@@ -26,7 +26,9 @@ class Group(models.Model):
         return True
 
     def remove_user_from_group(self, user):
-        pass
+        Event.objects.create(type='Leave', user=user, group=self)
+        self.members.remove(user)
+        return True
 
 
 class Message(models.Model):
