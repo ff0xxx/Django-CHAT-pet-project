@@ -1,0 +1,65 @@
+{% extends 'chat/base.html' %}
+{% load static %}
+
+{% block title %}
+    Create Group
+{% endblock %}
+
+{% block header %}
+    <span>Create Group</span>
+{% endblock %}
+
+{% block content %}
+<form method="POST" class="container mt-5 p-4 bg-light rounded-3" style="max-width: 450px;">
+    {% csrf_token %}
+    
+    <!-- Поле с названием группы -->
+    <div class="mb-4">
+        <label for="id_name" class="form-label fs-5 text-dark">Group name:</label>
+        <input 
+            type="text"
+            class="form-control form-control-lg bg-white"
+            name="name"
+            id="id_name"
+            maxlength="28"
+            required
+            value="{{ form.name.value|default_if_none:'' }}"
+        >
+    </div>
+    
+    <!-- Множественный выбор участников -->
+    <div class="mb-4">
+        <label for="id_members" class="form-label fs-5 text-dark">Members:</label>
+        <select 
+            name="members"
+            id="id_members"
+            class="form-select form-select-lg bg-white"
+            multiple
+            size="6"
+        >
+            {% for user in users %}
+                <option value="{{ user.id }}" 
+                    {% if user in group.members.all %}selected{% endif %}>
+                    {{ user.username }}
+                </option>
+            {% endfor %}
+        </select>
+        <div class="form-text mt-2">Hold Ctrl/Cmd to select multiple members</div>
+    </div>
+    
+    <!-- Кнопки -->
+    <div class="d-flex gap-3 mt-4">
+        <button type="submit" class="btn btn-primary btn-lg px-4 py-2 flex-grow-1">
+            Save Group
+        </button>
+        <a href="{% url 'chat:main-page' %}" class="btn btn-outline-secondary btn-lg px-4 py-2 flex-grow-1">
+            Cancel
+        </a>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+  <script type="module" src="{% static 'js/chat_ui.js' %}"></script>
+  <script type="module" src="{% static 'js/connection.js' %}"></script>
+{% endblock %}

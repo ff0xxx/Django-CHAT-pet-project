@@ -16,7 +16,7 @@ class Group(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("room", args=[str(self.uuid)])
+        return reverse("chat:group", args=[str(self.uuid)])
 
     def add_user_to_group(self, user):
         if self.members.filter(id=user.id).exists():

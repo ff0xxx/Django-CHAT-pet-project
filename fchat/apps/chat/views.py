@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.views.generic.list import ListView
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, CreateView
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
@@ -79,3 +80,17 @@ class CreateEventView(LoginRequiredMixin, View):
             return JsonResponse({
                 'message': str(e)
             }, status=400)
+        
+
+User = get_user_model()
+
+class CreateGroupView(LoginRequiredMixin, CreateView):
+    model = Group
+    fields = '__all__'
+    template_name = 'chat/create_group.html'
+
+    def get_context_data(self,  *args, **kwargs):
+            context = super().get_context_data()
+            context['group_list'] = self.request.user.user_groups.all()
+            context['users']= User.objects.all()
+            return context

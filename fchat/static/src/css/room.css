@@ -75,7 +75,7 @@ body {
     border: none;
     color: white;
     border-radius: 25px 0 0 25px; 
-    font-size: 23px;
+    font-size: 20px;
     background-color: #ff3103;
 
     &:hover {
@@ -86,12 +86,25 @@ body {
     border: none;
     color: white;
     border-radius: 0 25px 25px 0; 
-    font-size: 23px;
+    font-size: 20px;
     background-color: #0a9103;
 
     &:hover {
       background-color: #0fb706;
     }
+}
+#createGroup {
+  border: none;
+  color: white;
+  /* text-align: center;     */
+  width: 40%;     
+  font-size: 20px;
+  background-color: rgb(255, 241, 115);
+  box-shadow: none;
+  border-radius: 0;
+  &:hover {
+    background-color: rgb(251, 234, 81);
+  }
 }
 
 .main-content {
