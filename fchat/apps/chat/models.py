@@ -16,7 +16,7 @@ class Group(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("room", args=[str(self.uuid)])
+        return reverse("chat:group", args=[str(self.uuid)])
 
     def add_user_to_group(self, user):
         if self.members.filter(id=user.id).exists():
@@ -26,7 +26,9 @@ class Group(models.Model):
         return True
 
     def remove_user_from_group(self, user):
-        pass
+        Event.objects.create(type='Leave', user=user, group=self)
+        self.members.remove(user)
+        return True
 
 
 class Message(models.Model):

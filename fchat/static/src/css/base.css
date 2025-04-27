@@ -1,0 +1,61 @@
+/* Кастомные стили для милой карточки */
+.welcome-card {
+    max-width: 500px;
+    margin: 2rem auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .welcome-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .video-container {
+    background: #ffebee;
+    padding: 10px;
+  }
+  
+  .bg-light-pink {
+    background-color: #fff5f7;
+  }
+  
+  .cute-title {
+    font-family: 'Comic Neue', cursive;
+    color: #ff6b88;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+  
+  .cute-text {
+    font-family: 'Comic Neue', cursive;
+    color: #ff8fa3;
+    font-size: 1.25rem;
+  }
+  
+  /* Анимация пульсации сердца */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  .cute-text:hover {
+    animation: pulse 1s infinite;
+  }
+
+  .cute-title::after {
+    content: "✨";
+    margin-left: 10px;
+  }
+  
+  .cute-text::before {
+    content: "→ ";
+    color: #ff6b88;
+  }
+
+  .welcome-card {
+    animation: fadeIn 1s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }

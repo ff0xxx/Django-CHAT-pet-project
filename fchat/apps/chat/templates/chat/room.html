@@ -1,70 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ current_group.name }}</title>
-    {% load static %}    
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/room.css' %}">
-  </head>
-<body>
-  <div class="container-fluid">
-    <div class="row">      
-        <div class="col-md-3">
-            <div class="sidebar">
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-success" style="font-size: 1.5em" 
-                      data-bs-toggle="modal" data-bs-target="#exampleModal">Add new Group</button>
+{% extends 'chat/base.html' %}
+{% load static %}    
 
-                {% for group in group_list %}
-                    <a href="{% url 'chat:group' group.uuid %}">{{ group.name }}</a>
-                {% endfor %}
-            </div>
-        </div>
+{% block title %}
+  {{ current_group.name }}
+{% endblock %}
 
-      <div class="col-md-9 main-content">  <!-- Основной контент -->
-        <nav class="fixed-top title">  
-          <h2 class="fw-bold ms-2" data-group-uuid="{{ current_group.uuid }}">Group: <span>{{ current_group.name }}</span></h2>
-        </nav>
+{% block header %}
+  <h2 class="fw-bold ms-2" data-group-uuid="{{ current_group.uuid }}">Group: <span>{{ current_group.name }}</span></h2>
+{% endblock %} 
 
-        <div class="col-md-8 offset-md-2 chat-container">
-          <div id="chat-log"></div>
-          <div class="chat-box-tray">
-            <input placeholder="Input your message, {{ user.username }}" id="chat-message-input" type="text" min="1">
-            <button class="btn btn-primary" id="chat-message-submit" data-username="{{ user.username }}">Send</button>
-          </input>
-        </div>
-      </div>
-    </div>
+{% block content %}
+  <div id="chat-log"></div>
+  <div class="chat-box-tray">
+    <input placeholder="Input your message, {{ user.username }}" id="chat-message-input" type="text" min="1">
+    <button class="btn btn-primary" id="chat-message-submit" data-username="{{ user.username }}">Send</button>
+    </input>
   </div>
+{% endblock %}
 
-<!-- Modal: exampleModal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal--my-head modal-title fs-5" id="exampleModalLabel">Enter a group name and join:</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-        <div class="modal-body">
-          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-          <span id="groupInputError"></span>
-          <input placeholder="Group UUID" id="groupInput" type="text" required>
-        </div>
-        
-        <div class="modal-footer">
-          <button class="btn btn-primary" id="joinButton">Join</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      
-    </div>
-  </div>
-</div>
-
-<script src="{% static 'js/room.js' %}"></script>
-<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-</body>
-</html>
+{% block scripts %}
+  <script type="module" src="{% static 'js/chat_ui.js' %}"></script>
+  <script type="module" src="{% static 'js/connection.js' %}"></script>
+{% endblock %}
