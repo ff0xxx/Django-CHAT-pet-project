@@ -48,7 +48,7 @@ h2 {
   margin-bottom: 15px;
 }
   
-p {
+p, label {
   font-size: 1.2em;
   color: yellow; 
   text-shadow: 0 0 2px black;

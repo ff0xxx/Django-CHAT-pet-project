@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fchat - Registration</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <main class="compact-form">
+        <h2 class="fw-bold">Register!</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-error">{{ form.non_field_errors }}</div>
+            
+            {% for f in form %}
+            <div class="form-row">
+                <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>
+                {{ f }}
+                <div class="form-error">{{ f.errors }}</div>
+            </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary mt-2">Register</button>
+        </form>
+        <p class="login-link">
+            Have account? <a href="{% url 'accounts:login' %}">Login</a>
+        </p>
+    </main>
+
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+</html>
+
+<style>
+.compact-form {
+  max-height: 580px !important;
+  padding: 30px !important;
+}
+
+.form-row {
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.form-row label {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.form-row input {
+  width: 100%;
+  padding: 6px 10px !important;
+  font-size: 0.95em !important;
+}
+
+.login-link {
+  margin-top: 15px !important;
+  font-size: 1em !important;
+}
+
+@media (max-width: 768px) {
+  .compact-form {
+      scale: 1.1 !important;
+      max-height: 340px !important;
+      padding: 20px !important;
+  }
+}
+</style>
